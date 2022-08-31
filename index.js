@@ -1,8 +1,9 @@
 const express = require('express')
-require('dotenv').config()
 const { logger } = require('./utils/logger')
 const { errorHandler, unknowEndPoint } = require('./utils/middlewares')
-const routerOperation = require('./routes/operation')
+const routerUser = require('./controllers/usuario')
+require('dotenv').config()
+require('express-async-errors')
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use(logger)
 app.use('/public', express.static('static'))
 
 // routes
+app.use('/api-v1/user', routerUser)
 
 // error handlers
 app.use(unknowEndPoint)

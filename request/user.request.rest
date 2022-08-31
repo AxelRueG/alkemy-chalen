@@ -1,0 +1,22 @@
+### INSERT INVALID PASSWORD
+POST http://localhost:3000/api-v1/user/register
+Content-Type: application/json
+
+{
+  "username": "usuario1",
+  "password": "nvp",
+  "email": "mail@mail.com"
+}
+
+### INSERT USER
+POST http://localhost:3000/api-v1/user/register
+Content-Type: application/json
+
+{
+  "username": "usuario1",
+  "password": "password123",
+  "email": "mail@mail.com"
+}
+
+### UNKNOW ENDPOINT
+GET  http://localhost:3000/api-v1/
