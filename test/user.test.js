@@ -23,6 +23,7 @@ describe('create a new user', () => {
     const dbRows = await DB.query('SELECT id FROM profile')
     expect(dbRows.rowCount).toBe(1)
     expect(response.body).toHaveProperty('id')
+    expect(response.body.username).toBe(userDefault.username)
   })
   test('create an user with an invalid password', async () => {
     const response = await API.post('/v1/user')
