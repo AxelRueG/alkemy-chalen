@@ -4,8 +4,9 @@ const { errorHandler, unknowEndPoint } = require('./utils/middlewares')
 require('dotenv').config()
 require('express-async-errors')
 
-const routerUser = require('./controllers/usuario')
 const routerLogin = require('./controllers/login')
+const routerUser = require('./controllers/usuario')
+const routerOperations = require('./controllers/operation')
 const app = express()
 
 // middlewares
@@ -14,8 +15,9 @@ app.use(logger)
 app.use('/public', express.static('static'))
 
 // routes
-app.use('/v1/user', routerUser)
 app.use('/login', routerLogin)
+app.use('/v1/user', routerUser)
+app.use('/v1/operations', routerOperations)
 
 // error handlers
 app.use(unknowEndPoint)

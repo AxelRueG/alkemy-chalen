@@ -13,7 +13,6 @@ const defaultUser = {
 beforeEach(async () => {
   // Cleaing DB
   await DB.query('DELETE FROM operation WHERE 1=1')
-  await DB.query('DELETE FROM category WHERE 1=1')
   await DB.query('DELETE FROM profile WHERE 1=1')
 
   // Insert a user

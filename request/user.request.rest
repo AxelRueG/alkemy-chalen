@@ -19,4 +19,23 @@ Content-Type: application/json
 }
 
 ### UNKNOW ENDPOINT
-GET  http://localhost:3000/v1/
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "Usuario1",
+  "password": "password123"
+}
+
+### ============================================================================
+### CREATE A Operation
+POST http://localhost:3000/v1/operations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c3VhcmlvMSIsImlhdCI6MTY2MjE1MTQ1N30.mdTOejIL7MYJVdeUDzrZBD7yJm64tC-UAXBa17Be1wc
+
+{
+  "title": "titulo 3",
+  "description": "descripcion del numero tres",
+  "amount": -50,
+  "categoryId": 1
+}
