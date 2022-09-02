@@ -1,5 +1,5 @@
 ### INSERT INVALID PASSWORD
-POST http://localhost:3000/api-v1/user/register
+POST http://localhost:3000/v1/user/
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### INSERT USER
-POST http://localhost:3000/api-v1/user/register
+POST http://localhost:3000/v1/user/
 Content-Type: application/json
 
 {
@@ -19,4 +19,4 @@ Content-Type: application/json
 }
 
 ### UNKNOW ENDPOINT
-GET  http://localhost:3000/api-v1/
+GET  http://localhost:3000/v1/

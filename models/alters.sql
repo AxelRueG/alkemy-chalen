@@ -1,0 +1,1 @@
+ALTER TABLE profile ADD CONSTRAINT uk_email UNIQUE (email);

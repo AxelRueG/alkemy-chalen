@@ -1,13 +1,24 @@
 const { Router } = require('express')
 const router = Router()
-const pool = require('../models')
+const DB = require('../models')
 const bcrypt = require('bcrypt')
 
-router.post('/register', async (req, res) => {
-  const { username, password, email } = req.body
+const dataValid = (req, res, next) => {
+  const { password, email } = req.body
+
   // check valid data
-  if (password.length < 8)
+  const regExpresion =
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
+
+  if (password.length < 8 || !regExpresion.test(email))
     return res.status(400).json({ message: 'invalid data' })
+
+  // continue
+  next()
+}
+
+router.post('/', dataValid, async (req, res) => {
+  const { username, password, email } = req.body
 
   // hash password
   const password_hash = await bcrypt.hash(password, 10)
@@ -15,16 +26,16 @@ router.post('/register', async (req, res) => {
 
   // save the new user if don't exist
   try {
-    await pool.query(
+    await DB.query(
       'INSERT INTO profile (username,userpassword,email,img) VALUES ($1,$2,$3,$4)',
       [username, password_hash, email, img_url]
     )
   } catch (error) {
-    return res.json({ message: 'invalid data' })
+    return res.status(400).json({ message: 'invalid data' })
   }
 
   // return the new user created
-  const response = await pool.query(
+  const response = await DB.query(
     'SELECT id,username,email,img FROM profile WHERE username=$1',
     [username]
   )
