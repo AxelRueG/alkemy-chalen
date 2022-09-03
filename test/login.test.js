@@ -31,6 +31,7 @@ describe('test user login', () => {
       .expect(200)
     expect(response.body).toHaveProperty('token')
   })
+
   test('when user login with invalid credentials return an error message', async () => {
     const response = await API.post('/login')
       .send({ username: defaultUser.username, password: 'incorect' })
@@ -38,6 +39,7 @@ describe('test user login', () => {
     expect(response.body).toHaveProperty('message')
     expect(response.body.message).toBe('invalid credentials')
   })
+
   test('when user login with an ivalid user credentials return an error token', async () => {
     const response = await API.post('/login')
       .send({ username: 'unknow', password: 'secureP455' })

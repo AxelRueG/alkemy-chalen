@@ -1,24 +1,24 @@
-### INSERT INVALID PASSWORD
-POST http://localhost:3000/v1/user/
-Content-Type: application/json
-
-{
-  "username": "usuario1",
-  "password": "nvp",
-  "email": "mail@mail.com"
-}
-
-### INSERT USER
+### INSERT USERs----------------------------------------------------------------
 POST http://localhost:3000/v1/user/
 Content-Type: application/json
 
 {
   "username": "usuario1",
   "password": "password123",
-  "email": "mail@mail.com"
+  "email": "mail1@mail.com"
 }
 
-### UNKNOW ENDPOINT
+### 
+POST http://localhost:3000/v1/user/
+Content-Type: application/json
+
+{
+  "username": "usuario2",
+  "password": "password123",
+  "email": "mail2@mail.com"
+}
+
+### LOGIN ----------------------------------------------------------------------
 POST http://localhost:3000/login
 Content-Type: application/json
 
@@ -27,15 +27,70 @@ Content-Type: application/json
   "password": "password123"
 }
 
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "Usuario2",
+  "password": "password123"
+}
+
 ### ============================================================================
 ### CREATE A Operation
 POST http://localhost:3000/v1/operations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c3VhcmlvMSIsImlhdCI6MTY2MjE1MTQ1N30.mdTOejIL7MYJVdeUDzrZBD7yJm64tC-UAXBa17Be1wc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXNlcm5hbWUiOiJ1c3VhcmlvMSIsImlhdCI6MTY2MjE2NDIxN30.NGjv5QCRjGTYlCrLI6mLvHNOET8J8KVIGKQjDijwxkk
+
+{
+  "title": "titulo 1",
+  "description": "descripcion del numero uno",
+  "amount": 200,
+  "id_category": 1
+}
+
+### CREATE A Operation
+POST http://localhost:3000/v1/operations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInVzZXJuYW1lIjoidXN1YXJpbzIiLCJpYXQiOjE2NjIxNjQyNDV9.6G3ED7CScysnS-iKcxSbjfkUkKfOy7T4QDlw8UU4m78
+
+{
+  "title": "titulo 2",
+  "description": "descripcion del numero dos",
+  "amount": -50,
+  "id_category": 2
+}
+
+
+### CREATE AN Operation
+POST http://localhost:3000/v1/operations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXNlcm5hbWUiOiJ1c3VhcmlvMSIsImlhdCI6MTY2MjE2NDIxN30.NGjv5QCRjGTYlCrLI6mLvHNOET8J8KVIGKQjDijwxkk
 
 {
   "title": "titulo 3",
   "description": "descripcion del numero tres",
   "amount": -50,
-  "categoryId": 1
+  "id_category": 2
+}
+
+### GETTING THE OPERATIONS -----------------------------------------------------
+GET http://localhost:3000/v1/operations
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXNlcm5hbWUiOiJ1c3VhcmlvMSIsImlhdCI6MTY2MjE2NDIxN30.NGjv5QCRjGTYlCrLI6mLvHNOET8J8KVIGKQjDijwxkk
+
+### 
+GET http://localhost:3000/v1/operations
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInVzZXJuYW1lIjoidXN1YXJpbzIiLCJpYXQiOjE2NjIxNjQyNDV9.6G3ED7CScysnS-iKcxSbjfkUkKfOy7T4QDlw8UU4m78
+
+### UPDATE AN OPERATION --------------------------------------------------------
+PUT http://localhost:3000/v1/operations/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXNlcm5hbWUiOiJ1c3VhcmlvMSIsImlhdCI6MTY2MjE2NDIxN30.NGjv5QCRjGTYlCrLI6mLvHNOET8J8KVIGKQjDijwxkk
+Content-Type: application/json
+
+{
+  "title": "titulo 3",
+  "description": "descripcion del numero three",
+  "amount": -50,
+  "pub_date": "2022-09-02T03:00:00.000Z",
+  "id_category": 2
 }

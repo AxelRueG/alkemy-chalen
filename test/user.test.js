@@ -24,12 +24,14 @@ describe('create a new user', () => {
     expect(response.body).toHaveProperty('id')
     expect(response.body.username).toBe(userDefault.username)
   })
+
   test('create an user with an invalid password', async () => {
     const response = await API.post('/v1/user')
       .send({ ...userDefault, password: 'shot' })
       .expect(400)
     expect(response.body.message).toEqual('invalid data')
   })
+
   test('create an user with an used username', async () => {
     await API.post('/v1/user').send(userDefault).expect(201)
     const response = await API.post('/v1/user')
@@ -37,6 +39,7 @@ describe('create a new user', () => {
       .expect(400)
     expect(response.body.message).toEqual('invalid data')
   })
+
   test('create an user with an invalid email', async () => {
     const response = await API.post('/v1/user')
       .send({ ...userDefault, email: '@mail.com' })

@@ -26,4 +26,18 @@ const checkToken = (req, res, next) => {
   }
 }
 
-module.exports = { unknowEndPoint, errorHandler, checkToken }
+const dataValid = (req, res, next) => {
+  const { password, email } = req.body
+
+  // check valid data
+  const regExpresion =
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
+
+  if (password.length < 8 || !regExpresion.test(email))
+    return res.status(400).json({ message: 'invalid data' })
+
+  // continue
+  next()
+}
+
+module.exports = { unknowEndPoint, errorHandler, checkToken, dataValid }
