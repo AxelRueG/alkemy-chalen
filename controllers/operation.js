@@ -80,4 +80,17 @@ router.put('/:id', checkToken, async (req, res) => {
   return res.status(201).json(response)
 })
 
+router.delete('/:id', checkToken, async (req, res) => {
+  const User = jwt.verify(req.token, process.env.SECRET)
+  const id = Number(req.params.id)
+  // Delete the operation with valid id and id_profile
+  const result = await DB.query(
+    'DELETE FROM operation WHERE id=$1 AND id_profile=$2',
+    [id, User.id]
+  )
+
+  const response = result.rowCount ? { message: 'operation deleted' } : {}
+  return res.status(200).json(response)
+})
+
 module.exports = router

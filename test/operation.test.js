@@ -139,7 +139,7 @@ describe('get, update and delete operations', () => {
     expect(response.body.message).toBe('invalid credentials')
   })
 
-  test('when a user tries to edit a publication that is not theirs, it shows an error message', async () => {
+  test('when a user tries to edit a publication that is not theirs or not exist, return an empty array', async () => {
     const allOperations = await DB.query('SELECT id FROM operation')
 
     const response = await API.put(`/v1/operations/${allOperations.rows[1].id}`)
@@ -150,7 +150,40 @@ describe('get, update and delete operations', () => {
   })
 
   // delete method -------------------------------------------------------------
-  test('when the user is logged can delete an operation', async () => {})
-  test('when the user isnt logged cannot delete an operation', async () => {})
-  test('when a user tries to delete a operation that is not theirs, it shows an error message', async () => {})
+  test('when the user is logged can delete an operation', async () => {
+    const resOperations = await API.get('/v1/operations/')
+      .set('Authorization', `Bearer ${u1.token}`)
+      .expect(200)
+
+    console.log(u1.token)
+    const response = await API.delete(
+      `/v1/operations/${resOperations.body[0].id}`
+    )
+      .set('Authorization', `Bearer ${u1.token}`)
+      .expect(200)
+
+    expect(response.body.message).toBe(`operation deleted`)
+  })
+  test('when the user isnt logged cannot delete an operation', async () => {
+    const resOperations = await API.get('/v1/operations/')
+      .set('Authorization', `Bearer ${u1.token}`)
+      .expect(200)
+
+    const response = await API.delete(
+      `/v1/operations/${resOperations.body[0].id}`
+    ).expect(401)
+
+    expect(response.body.message).toBe('invalid credentials')
+  })
+  test('when a user tries to delete a operation that isnt their or dont exist, return empty object', async () => {
+    const allOperations = await DB.query('SELECT id FROM operation')
+
+    const response = await API.delete(
+      `/v1/operations/${allOperations.rows[1].id}`
+    )
+      .set('Authorization', `Bearer ${u1.token}`)
+      .expect(200)
+
+    expect(response.body).toEqual({})
+  })
 })
