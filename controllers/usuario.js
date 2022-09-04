@@ -5,6 +5,22 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { dataValid, checkToken } = require('../utils/middlewares')
 
+router.get('/', checkToken, async (req, res) => {
+  const User = jwt.verify(req.token, process.env.SECRET)
+  // get the sum of all operations of an user
+  const response = await DB.query(
+    `
+    SElECT p.id, p.username, p.email, p.img, SUM(o.amount) AS summary
+    FROM profile p INNER JOIN operation o 
+      ON p.id=o.id_profile 
+    WHERE p.id=$1
+    GROUP BY p.id
+    `,
+    [User.id]
+  )
+  return res.status(200).json(response.rows[0])
+})
+
 router.post('/', dataValid, async (req, res) => {
   const { username, password, email } = req.body
 

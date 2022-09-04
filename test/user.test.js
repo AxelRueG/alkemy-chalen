@@ -48,15 +48,15 @@ describe('create a new user', () => {
   })
 })
 
+let User = undefined
+
+const userDef2 = {
+  username: 'user2',
+  password: 'password22',
+  email: 'user2@mail.com',
+}
+
 describe('update user data', () => {
-  let User = undefined
-
-  const userDef2 = {
-    username: 'user2',
-    password: 'password22',
-    email: 'user2@mail.com',
-  }
-
   beforeEach(async () => {
     // create a new user and login for get credentials
     await API.post('/v1/user').send(userDefault).expect(201)
@@ -155,5 +155,37 @@ describe('update user data', () => {
       .expect(401)
 
     expect(response.body.message).toBe('invalid credentials')
+  })
+})
+
+describe('get user data', () => {
+  beforeEach(async () => {
+    // create a new user and login for get credentials
+    await API.post('/v1/user').send(userDefault).expect(201)
+    User = await API.post('/login').send(userDefault).expect(200)
+    User = User.body
+
+    const date = new Date()
+    await DB.query(
+      `
+      INSERT INTO operation (id_profile,id_category,title,description,amount,pub_date)
+      VALUES  ($1,4,'op1','description 1',200,$2),
+              ($1,1,'op2','',-50,$2),
+              ($1,2,'op3','description 2',-15,$2)
+      `,
+      [User.id, date]
+    )
+  })
+
+  test('When a logged user consults their information, receive their data and their value account statement', async () => {
+    const userResponse = await API.get('/v1/user')
+      .set('Authorization', `Bearer ${User.token}`)
+      .expect(200)
+    expect(userResponse.body.id).toBe(User.id)
+    expect(userResponse.body.summary).toBe(135)
+  })
+  test('When an unlogged user consults for information, receive an error message', async () => {
+    const userResponse = await API.get('/v1/user').expect(401)
+    expect(userResponse.body.message).toBe('invalid credentials')
   })
 })
