@@ -2,7 +2,8 @@ const { Router } = require('express')
 const router = Router()
 const DB = require('../models')
 const bcrypt = require('bcrypt')
-const { dataValid } = require('../utils/middlewares')
+const jwt = require('jsonwebtoken')
+const { dataValid, checkToken } = require('../utils/middlewares')
 
 router.post('/', dataValid, async (req, res) => {
   const { username, password, email } = req.body
@@ -12,14 +13,10 @@ router.post('/', dataValid, async (req, res) => {
   const img_url = `${process.env.BASE_URL}/public/img/profile_default.webp`
 
   // save the new user if don't exist
-  try {
-    await DB.query(
-      'INSERT INTO profile (username,userpassword,email,img) VALUES ($1,$2,$3,$4)',
-      [username, password_hash, email, img_url]
-    )
-  } catch (error) {
-    return res.status(400).json({ message: 'invalid data' })
-  }
+  await DB.query(
+    'INSERT INTO profile (username,userpassword,email,img) VALUES ($1,$2,$3,$4)',
+    [username, password_hash, email, img_url]
+  )
 
   // return the new user created
   const response = await DB.query(
@@ -27,6 +24,20 @@ router.post('/', dataValid, async (req, res) => {
     [username]
   )
   return res.status(201).json(response.rows[0])
+})
+
+router.put('/username', checkToken, async (req, res) => {
+  const User = jwt.verify(req.token, process.env.SECRET)
+  const { username } = req.body
+
+  console.log(User, username)
+
+  await DB.query('UPDATE profile SET username=$1 WHERE id=$2', [
+    username,
+    User.id,
+  ])
+
+  return res.status(201).json({ id: User.id, username })
 })
 
 module.exports = router

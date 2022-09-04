@@ -47,3 +47,49 @@ describe('create a new user', () => {
     expect(response.body.message).toEqual('invalid data')
   })
 })
+
+describe('update user data', () => {
+  let User = undefined
+
+  const userDef2 = {
+    username: 'user2',
+    password: 'password22',
+    email: 'user2@mail.com',
+  }
+
+  beforeEach(async () => {
+    // create a new user and login for get credentials
+    await API.post('/v1/user').send(userDefault).expect(201)
+    await API.post('/v1/user').send(userDef2).expect(201)
+    User = await API.post('/login').send(userDefault).expect(200)
+    User = User.body
+  })
+  // try to change the user name
+  test('when a user is logged can change his username if the name isnt in use', async () => {
+    const response = await API.put('/v1/user/username')
+      .set('Authorization', `Bearer ${User.token}`)
+      .send({ username: 'user_def' })
+      .expect(201)
+
+    expect(response.body.id).toBe(User.id)
+    expect(response.body.username).toBe('user_def')
+  })
+
+  test('when a user is logged cannot change his username if the name is in use', async () => {
+    const response = await API.put('/v1/user/username')
+      .set('Authorization', `Bearer ${User.token}`)
+      .send({ username: 'user2' })
+      .expect(400)
+
+    expect(response.body.message).toBe('invalid data')
+  })
+
+  test('when a user isnt logged cannot change his username returning message error', async () => {
+    const response = await API.put('/v1/user/username')
+      .send({ username: 'user_def' })
+      .expect(401)
+
+    console.log(response.body.message)
+    expect(response.body.message).toBe('invalid credentials')
+  })
+})

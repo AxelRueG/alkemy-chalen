@@ -6,6 +6,7 @@ require('express-async-errors')
 
 const routerLogin = require('./controllers/login')
 const routerUser = require('./controllers/usuario')
+const routerCategories = require('./controllers/category')
 const routerOperations = require('./controllers/operation')
 const app = express()
 
@@ -17,6 +18,7 @@ app.use('/public', express.static('static'))
 // routes
 app.use('/login', routerLogin)
 app.use('/v1/user', routerUser)
+app.use('/v1/categories', routerCategories)
 app.use('/v1/operations', routerOperations)
 
 // error handlers

@@ -8,9 +8,11 @@ const errorHandler = (error, req, res, next) => {
   if (error.name == 'CastError')
     res.status(400).json({ message: 'invalid data' })
   else if (error.name == 'CastError')
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ message: error.message })
   else if (error.name == 'JsonWebTokenError') {
-    res.status(401).json({ error: 'invalid credentials' })
+    res.status(401).json({ message: 'invalid credentials' })
+  } else if (error.name == 'error' && error.code == '23505') {
+    res.status(400).json({ message: 'invalid data' })
   }
 
   next(error)
