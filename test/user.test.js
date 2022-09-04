@@ -92,4 +92,68 @@ describe('update user data', () => {
     console.log(response.body.message)
     expect(response.body.message).toBe('invalid credentials')
   })
+  // try to change the password
+  test('when a user is logged can change his password', async () => {
+    const response = await API.put('/v1/user/password')
+      .set('Authorization', `Bearer ${User.token}`)
+      .send({
+        oldpassword: userDefault.password,
+        password1: 'secureP455',
+        password2: 'secureP455',
+      })
+      .expect(201)
+
+    expect(response.body.message).toBe('password changed')
+  })
+
+  test('when a user try change his password and the current password is icorrect, return an error message', async () => {
+    const response = await API.put('/v1/user/password')
+      .set('Authorization', `Bearer ${User.token}`)
+      .send({
+        oldpassword: undefined,
+        password1: 'short',
+        password2: 'short',
+      })
+      .expect(400)
+
+    expect(response.body.message).toBe('invalid data')
+  })
+
+  test('when a user try change his password for an invalid, return an error message', async () => {
+    const response = await API.put('/v1/user/password')
+      .set('Authorization', `Bearer ${User.token}`)
+      .send({
+        oldpassword: userDefault.password,
+        password1: 'short',
+        password2: 'short',
+      })
+      .expect(400)
+
+    expect(response.body.message).toBe('invalid data')
+  })
+
+  test('when a user try change his password and dont mach, return an error message', async () => {
+    const response = await API.put('/v1/user/password')
+      .set('Authorization', `Bearer ${User.token}`)
+      .send({
+        oldpassword: userDefault.password,
+        password1: 'secureP455',
+        password2: 'secureP456',
+      })
+      .expect(400)
+
+    expect(response.body.message).toBe('invalid data')
+  })
+
+  test('when a user isnt logged cannot change his password returning message error', async () => {
+    const response = await API.put('/v1/user/password')
+      .send({
+        oldpassword: userDefault.password,
+        password1: 'secureP455',
+        password2: 'secureP455',
+      })
+      .expect(401)
+
+    expect(response.body.message).toBe('invalid credentials')
+  })
 })

@@ -32,10 +32,11 @@ const dataValid = (req, res, next) => {
   const { password, email } = req.body
 
   // check valid data
-  const regExpresion =
+  const validateEmail =
     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
 
-  if (password.length < 8 || !regExpresion.test(email))
+  const validatePassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
+  if (validatePassword.test(password) || !validateEmail.test(email))
     return res.status(400).json({ message: 'invalid data' })
 
   // continue
