@@ -4,6 +4,7 @@ const DB = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { dataValid, checkToken } = require('../utils/middlewares')
+const upload = require('../utils/fileUpload')
 
 router.get('/', checkToken, async (req, res) => {
   const User = jwt.verify(req.token, process.env.SECRET)
@@ -95,6 +96,10 @@ router.put('/password', checkToken, async (req, res) => {
   ])
 
   return res.status(201).json({ message: 'password changed' })
+})
+
+router.post('/img', upload.single('user_profile'), (req, res) => {
+  return res.status(201).json({ message: 'created' })
 })
 
 module.exports = router

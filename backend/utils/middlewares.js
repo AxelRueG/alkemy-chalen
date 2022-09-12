@@ -13,6 +13,8 @@ const errorHandler = (error, req, res, next) => {
     res.status(401).json({ message: 'invalid credentials' })
   } else if (error.name == 'error' && error.code == '23505') {
     res.status(400).json({ message: 'invalid data' })
+  } else if (error.message == 'invalid file type') {
+    res.status(400).json({ message: error.message })
   }
 
   next(error)
