@@ -38,7 +38,7 @@ const dataValid = (req, res, next) => {
     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
 
   const validatePassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
-  if (validatePassword.test(password) || !validateEmail.test(email))
+  if (!(validatePassword.test(password) && validateEmail.test(email)))
     return res.status(400).json({ message: 'invalid data' })
 
   // continue

@@ -17,10 +17,9 @@ beforeEach(async () => {
 
   // Insert a user
   const hash_password = await bcrypt.hash(defaultUser.password, 10)
-  const img = 'default_user.png'
   await DB.query(
-    'INSERT INTO profile (username,userpassword,email,img) VALUES ($1,$2,$3,$4)',
-    [defaultUser.username, hash_password, defaultUser.email, img]
+    'INSERT INTO profile (username,userpassword,email,id_img) VALUES ($1,$2,$3,$4)',
+    [defaultUser.username, hash_password, defaultUser.email, 1]
   )
 })
 

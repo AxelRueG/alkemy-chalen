@@ -8,6 +8,7 @@ const routerLogin = require('./controllers/login')
 const routerUser = require('./controllers/usuario')
 const routerCategories = require('./controllers/category')
 const routerOperations = require('./controllers/operation')
+const routerImagesProfile = require('./controllers/images')
 const app = express()
 
 // middlewares
@@ -21,6 +22,7 @@ app.use('/login', routerLogin)
 app.use('/v1/user', routerUser)
 app.use('/v1/categories', routerCategories)
 app.use('/v1/operations', routerOperations)
+app.use('/v1/images_profile', routerImagesProfile)
 
 // error handlers
 app.use(unknowEndPoint)

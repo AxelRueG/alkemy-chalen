@@ -4,18 +4,16 @@ const DB = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { dataValid, checkToken } = require('../utils/middlewares')
-const upload = require('../utils/fileUpload')
 
 router.get('/', checkToken, async (req, res) => {
   const User = jwt.verify(req.token, process.env.SECRET)
   // get the sum of all operations of an user
   const response = await DB.query(
     `
-    SElECT p.id, p.username, p.email, p.img, SUM(o.amount) AS summary
-    FROM profile p INNER JOIN operation o 
-      ON p.id=o.id_profile 
+    SElECT p.id, p.username, p.email, i.img_url, (SELECT SUM(amount) FROM operation o WHERE o.id_profile=p.id) AS summary
+    FROM profile p INNER JOIN img_profile i 
+      ON i.id=p.id_img 
     WHERE p.id=$1
-    GROUP BY p.id
     `,
     [User.id]
   )
@@ -27,20 +25,14 @@ router.post('/', dataValid, async (req, res) => {
 
   // hash password
   const password_hash = await bcrypt.hash(password, 10)
-  const img_url = `${process.env.BASE_URL}/public/img/profile_default.webp`
 
   // save the new user if don't exist
   await DB.query(
-    'INSERT INTO profile (username,userpassword,email,img) VALUES ($1,$2,$3,$4)',
-    [username, password_hash, email, img_url]
+    'INSERT INTO profile (username,userpassword,email,id_img) VALUES ($1,$2,$3,$4)',
+    [username, password_hash, email, 1]
   )
 
-  // return the new user created
-  const response = await DB.query(
-    'SELECT id,username,email,img FROM profile WHERE username=$1',
-    [username]
-  )
-  return res.status(201).json(response.rows[0])
+  return res.status(201).json({ message: 'user created successfully'})
 })
 
 router.put('/username', checkToken, async (req, res) => {
@@ -98,8 +90,13 @@ router.put('/password', checkToken, async (req, res) => {
   return res.status(201).json({ message: 'password changed' })
 })
 
-router.post('/img', upload.single('user_profile'), (req, res) => {
-  return res.status(201).json({ message: 'created' })
+router.put('/image', checkToken, async (req,res) => {
+  const User = jwt.verify(req.token, process.env.SECRET)
+  const id_img = Number(req.body.id_img)
+
+  await DB.query('UPDATE profile SET id_img=$2 WHERE id=$1',[User.id, id_img])
+  
+  return res.status(201).json({ message: 'image profile changed'})
 })
 
 module.exports = router

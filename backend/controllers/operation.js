@@ -9,13 +9,13 @@ router.post('/', checkToken, async (req, res) => {
   const User = jwt.verify(req.token, process.env.SECRET)
   let { title, description, pub_date, amount, id_category } = req.body
 
-  // @TODO: solve this line
-  const categoryId = process.env.NODE_ENV == 'test' ? 4 : 1
+  // the id of income category is hardcode on the insert 
+  const incomeID = 1
   // check if the pub_date is valid else put the current date for default
   pub_date = pub_date ? pub_date : new Date()
   // all values will be positive and have a signed depend of the category
   amount = Math.abs(amount)
-  amount = id_category === categoryId ? amount : -amount
+  amount = id_category === incomeID ? amount : -amount
 
   await DB.query(
     `INSERT INTO operation
@@ -51,7 +51,14 @@ router.get('/', checkToken, async (req, res) => {
 router.put('/:id', checkToken, async (req, res) => {
   const User = jwt.verify(req.token, process.env.SECRET)
   const id = Number(req.params.id)
-  const { title, description, pub_date, amount, id_category } = req.body
+  const { title, description, pub_date, id_category } = req.body
+  let { amount } = req.body
+
+  // the id of income category is hardcode on the insert 
+  const incomeID = 1
+  // all values will be positive and have a signed depend of the category
+  amount = Math.abs(amount)
+  amount = id_category === incomeID ? amount : -amount
 
   // only update when the operation when this belong to user
   await DB.query(

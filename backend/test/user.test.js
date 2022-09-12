@@ -5,7 +5,7 @@ const DB = require('../models')
 
 const userDefault = {
   username: 'user1',
-  password: 'password22',
+  password: 'Password22',
   email: 'usermail@mail.com',
 }
 
@@ -21,8 +21,7 @@ describe('create a new user', () => {
     const response = await API.post('/v1/user').send(userDefault).expect(201)
     const dbRows = await DB.query('SELECT id FROM profile')
     expect(dbRows.rowCount).toBe(1)
-    expect(response.body).toHaveProperty('id')
-    expect(response.body.username).toBe(userDefault.username)
+    expect(response.body.message).toBe('user created successfully')
   })
 
   test('create an user with an invalid password', async () => {
@@ -52,7 +51,7 @@ let User = undefined
 
 const userDef2 = {
   username: 'user2',
-  password: 'password22',
+  password: 'Password22',
   email: 'user2@mail.com',
 }
 

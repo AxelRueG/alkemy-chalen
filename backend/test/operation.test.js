@@ -61,7 +61,18 @@ beforeEach(async () => {
 })
 
 describe('create a new operation', () => {
-  test('when an user is logged can create a new operation', async () => {
+  test('when an user is logged can create a new operation (income)', async () => {
+    const response = await API.post('/v1/operations/')
+      .set('Authorization', `Bearer ${u1.token}`)
+      .send({ ...operations[0], id_category: 1 })
+      .expect(201)
+
+    expect(response.body).toHaveProperty('id')
+    expect(response.body.title).toBe(operations[0].title)
+    expect(response.body.amount).toBe(operations[0].amount)
+  })
+
+  test('when an user is logged can create a new operation (other)', async () => {
     const response = await API.post('/v1/operations/')
       .set('Authorization', `Bearer ${u1.token}`)
       .send({ ...operations[0], id_category: 4 })
@@ -69,6 +80,7 @@ describe('create a new operation', () => {
 
     expect(response.body).toHaveProperty('id')
     expect(response.body.title).toBe(operations[0].title)
+    expect(response.body.amount).toBe(-operations[0].amount)
   })
 
   test('when an user has invalid credentials cannot create a new operation', async () => {
@@ -84,10 +96,10 @@ describe('get, update and delete operations', () => {
   beforeEach(async () => {
     // load some operations in the DB
     await API.post('/v1/operations/')
-      .send({ ...operations[0], id_category: 4 })
+      .send({ ...operations[0], id_category: 1 })
       .set('Authorization', `Bearer ${u1.token}`)
     await API.post('/v1/operations/')
-      .send({ ...operations[1], id_category: 1 })
+      .send({ ...operations[1], id_category: 3 })
       .set('Authorization', `Bearer ${u2.token}`)
     await API.post('/v1/operations/')
       .send({ ...operations[2], id_category: 2 })
@@ -104,6 +116,7 @@ describe('get, update and delete operations', () => {
     // the length==2 is because en loadOperations the operations are load in two users
     expect(response.body).toHaveLength(2)
     expect(response.body[0].title).toBe(operations[0].title)
+    expect(response.body[1].title).toBe(operations[2].title)
   })
 
   test('when an user has invalid credentials cannot see any operation', async () => {
