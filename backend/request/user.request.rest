@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "username": "usuario1",
-  "password": "password123",
+  "password": "Password123",
   "email": "mail1@mail.com"
 }
 
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "username": "usuario2",
-  "password": "password123",
+  "password": "Password123",
   "email": "mail2@mail.com"
 }
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "username": "Usuario1",
-  "password": "password123"
+  "password": "Password123"
 }
 
 ###
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 {
   "username": "Usuario2",
-  "password": "password123"
+  "password": "Password123"
 }
 
 ### ============================================================================

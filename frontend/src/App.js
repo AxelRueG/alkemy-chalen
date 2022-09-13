@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useEffect } from 'react'
+import service from './services/services'
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Navigate,
+} from 'react-router-dom'
+import { LoginForm } from './components/LoginForm'
+import { Home } from './components/Home'
+import { UserContext } from './contexts/UserContext'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+	const { user, setUser } = useContext(UserContext)
+
+	useEffect(() => {
+		console.log('me estoy ejecutando (soy el Effect)')
+		const userData = window.localStorage.getItem('userData')
+		if (userData) {
+			const userCredentials = JSON.parse(userData)
+			setUser(userCredentials)
+			service.setToken(userCredentials.token)
+		}
+	}, [setUser])
+
+	return (
+		<div className="App">
+			<Router>
+				<Routes>
+					<Route
+						path="/login"
+						element={user ? <Navigate to="/" /> : <LoginForm />}
+					/>
+					<Route
+						path="/"
+						user={user}
+						element={user ? <Home /> : <Navigate to="/login" />}
+					/>
+				</Routes>
+			</Router>
+		</div>
+	)
 }
 
-export default App;
+export default App

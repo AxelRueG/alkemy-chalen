@@ -1,6 +1,7 @@
 const express = require('express')
 const { logger } = require('./utils/logger')
 const { errorHandler, unknowEndPoint } = require('./utils/middlewares')
+const cors = require('cors')
 require('dotenv').config()
 require('express-async-errors')
 
@@ -12,6 +13,7 @@ const routerImagesProfile = require('./controllers/images')
 const app = express()
 
 // middlewares
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(logger)
