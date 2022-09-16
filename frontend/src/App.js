@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import service from './services/services'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route, NavLink } from 'react-router-dom'
 import { LoginForm } from './components/LoginForm'
 import { Home } from './components/Home'
 import { UserContext } from './contexts/UserContext'
@@ -22,35 +22,52 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<Router>
-				<Routes>
-					<Route
-						path="/register"
-						element={
-							<PublicRoutes>
-								<RegisterForm />
-							</PublicRoutes>
-						}
-					/>
-					<Route
-						path="/login"
-						element={
-							<PublicRoutes>
-								<LoginForm />
-							</PublicRoutes>
-						}
-					/>
-					<Route
-						path="/"
-						user={user}
-						element={
-							<PrivateRoutes>
-								<Home />
-							</PrivateRoutes>
-						}
-					/>
-				</Routes>
-			</Router>
+			<header>
+				<h1>Presupuesto Personal</h1>
+				{user ? (
+					<ul>
+						<li>
+							<NavLink to="/">Home</NavLink>
+						</li>
+					</ul>
+				) : (
+					<ul>
+						<li>
+							<NavLink to="/login">Log in</NavLink>
+						</li>
+						<li>
+							<NavLink to="/register">Sign in</NavLink>
+						</li>
+					</ul>
+				)}
+			</header>
+			<Routes>
+				<Route
+					path="/register"
+					element={
+						<PublicRoutes>
+							<RegisterForm />
+						</PublicRoutes>
+					}
+				/>
+				<Route
+					path="/login"
+					element={
+						<PublicRoutes>
+							<LoginForm />
+						</PublicRoutes>
+					}
+				/>
+				<Route
+					path="/"
+					user={user}
+					element={
+						<PrivateRoutes>
+							<Home />
+						</PrivateRoutes>
+					}
+				/>
+			</Routes>
 		</div>
 	)
 }

@@ -22,7 +22,32 @@ class Services {
 		}
 	}
 
-	setToken = (token) => (token = `Bearer ${token}`)
+	config = () => {
+		return {
+			headers: {
+				Authorization: this.token,
+			},
+		}
+	}
+
+	getOperations = async () => {
+		const operations = await axios.get(
+			`${this.URL}/v1/operations`,
+			this.config()
+		)
+		return operations.data
+	}
+
+	sendOperation = async (operation) => {
+		const response = await axios.post(
+			`${this.URL}/v1/operations`,
+			operation,
+			this.config()
+		)
+		return response.data
+	}
+
+	setToken = (token) => (this.token = `Bearer ${token}`)
 }
 
 const service = new Services()

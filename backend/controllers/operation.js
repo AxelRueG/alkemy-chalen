@@ -42,7 +42,8 @@ router.get('/', checkToken, async (req, res) => {
     `SELECT o.*,c.name,c.img 
     FROM operation o INNER JOIN category c 
       ON o.id_category=c.id 
-    WHERE o.id_profile=$1`,
+    WHERE o.id_profile=$1
+    ORDER BY o.pub_date DESC`,
     [User.id]
   )
   return res.status(200).json(operations.rows)
