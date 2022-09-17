@@ -47,6 +47,42 @@ class Services {
 		return response.data
 	}
 
+	getUserSummary = async () => {
+		const response = await axios.get(`${this.URL}/v1/user`, this.config())
+		return response.data
+	}
+
+	getListImages = async () => {
+		const response = await axios.get(`${this.URL}/v1/images_profile`)
+		return response.data
+	}
+
+	getListCategories = async () => {
+		const response = await axios.get(`${this.URL}/v1/categories`)
+		return response.data
+	}
+
+	deleteOperation = async (id) => {
+		await axios.delete(`${this.URL}/v1/operations/${id}`, this.config())
+	}
+
+	getOnlyOperation = async (id) => {
+		const response = await axios.get(
+			`${this.URL}/v1/operations/${id}`,
+			this.config()
+		)
+		return response.data
+	}
+
+	updateOperation = async (id, operation) => {
+		const response = await axios.put(
+			`${this.URL}/v1/operations/${id}`,
+			operation,
+			this.config()
+		)
+		return response.data
+	}
+
 	setToken = (token) => (this.token = `Bearer ${token}`)
 }
 

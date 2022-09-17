@@ -7,6 +7,7 @@ import { UserContext } from './contexts/UserContext'
 import { RegisterForm } from './components/RegisterForm'
 import { PublicRoutes } from './Routes/PublicRoutes'
 import { PrivateRoutes } from './Routes/PrivateRoutes'
+import { EditOperationForm } from './components/EditOperationForm'
 
 const App = () => {
 	const { user, setUser } = useContext(UserContext)
@@ -64,6 +65,15 @@ const App = () => {
 					element={
 						<PrivateRoutes>
 							<Home />
+						</PrivateRoutes>
+					}
+				/>
+				<Route
+					path="/operation/:id"
+					user={user}
+					element={
+						<PrivateRoutes>
+							<EditOperationForm />
 						</PrivateRoutes>
 					}
 				/>

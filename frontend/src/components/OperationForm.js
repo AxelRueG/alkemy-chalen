@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import service from '../services/services'
 
 const formatDate = (date) => {
 	let year = date.getFullYear()
 	let month = String(date.getMonth() + 1)
-	let day = String(date.getDay())
+	let day = String(date.getDate())
 
 	month = month.length === 1 ? `0${month}` : `${month}`
 	day = day.length === 1 ? `0${day}` : `${day}`
@@ -12,11 +11,13 @@ const formatDate = (date) => {
 	return `${year}-${month}-${day}`
 }
 
-export const OperationForm = ({ operations, setOperations }) => {
-	const [title, setTitle] = useState('')
-	const [description, setDescription] = useState('')
-	const [amount, setAmount] = useState(0)
-	const [pub_date, setPubDate] = useState(formatDate(new Date()))
+export const OperationForm = ({ handleAddOperation, operation = {} }) => {
+	const [title, setTitle] = useState(operation.title || '')
+	const [description, setDescription] = useState(operation.description || '')
+	const [amount, setAmount] = useState(operation.amount || 0)
+	const [pub_date, setPubDate] = useState(
+		operation.pub_date ? formatDate(operation.pub_date) : formatDate(new Date())
+	)
 
 	const handleTitle = (event) => setTitle(event.target.value)
 	const handleDescription = (event) => setDescription(event.target.value)
@@ -26,17 +27,19 @@ export const OperationForm = ({ operations, setOperations }) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault()
 
-		const newOperation = await service.sendOperation({
-			title,
+		await handleAddOperation({
+			title: title || null,
 			description,
 			amount,
 			pub_date: new Date(pub_date),
 			id_category: 2,
 		})
-		setOperations([...operations, newOperation])
-		setTitle('')
-		setDescription('')
-		setAmount(0)
+
+		if (!operation.title) {
+			setTitle('')
+			setDescription('')
+			setAmount(0)
+		}
 	}
 
 	return (
