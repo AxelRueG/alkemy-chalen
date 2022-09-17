@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
-import service from '../services/services'
+import service from '../../services/services'
 import { Link, useNavigate } from 'react-router-dom'
-import { UserContext } from '../contexts/UserContext'
+import { UserContext } from '../../contexts/UserContext'
 
 export const LoginForm = () => {
 	const { setUser } = useContext(UserContext)
@@ -30,18 +30,8 @@ export const LoginForm = () => {
 	return (
 		<>
 			<form>
-				<input
-					type="text"
-					value={username}
-					placeholder="username"
-					onChange={handleUsername}
-				/>
-				<input
-					type="password"
-					value={password}
-					placeholder="password"
-					onChange={handlepassword}
-				/>
+				<input type="text" value={username} placeholder="username" onChange={handleUsername} />
+				<input type="password" value={password} placeholder="password" onChange={handlepassword} />
 				<button onClick={handleClick}>log in</button>
 			</form>
 			<Link to="/register">sign in</Link>

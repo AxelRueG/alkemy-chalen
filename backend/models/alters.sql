@@ -12,7 +12,10 @@ CREATE TABLE img_profile (
 );
 
 INSERT INTO img_profile (img_url) 
-  VALUES ('http://localhost:3000/public/profile-img/user_profile_default.webp');
+  VALUES ('http://192.168.100.138:3000/public/profile-img/user_profile_default.webp');
+
+INSERT INTO img_profile (img_url) 
+  VALUES ('http://192.168.100.138:3000/public/profile-img/u2.png');
 
 ALTER TABLE profile DROP COLUMN img;
 ALTER TABLE profile ADD COLUMN id_img INT NOT NULL DEFAULT 1;

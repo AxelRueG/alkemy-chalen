@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import service from '../services/services'
-import { OperationForm } from './OperationForm'
-
-const Message = ({ message }) => {
-	return <div>{message}</div>
-}
+import service from '../../services/services'
+import { OperationForm } from '../OperationForm'
+import { Message } from '../Message'
 
 export const EditOperationForm = () => {
 	const { id } = useParams()
@@ -29,7 +26,7 @@ export const EditOperationForm = () => {
 			await service.updateOperation(id, operationData)
 			navigate('/')
 		} catch (error) {
-			setMessage('error to update operation')
+			setMessage('could not update operation')
 		}
 	}
 
@@ -37,10 +34,7 @@ export const EditOperationForm = () => {
 		<>
 			{message !== '' && <Message message={message} />}
 			<h2>Edit the operation {operation.title}</h2>
-			<OperationForm
-				handleAddOperation={handleAddOperation}
-				operation={operation}
-			/>
+			<OperationForm handleAddOperation={handleAddOperation} operation={operation} />
 		</>
 	) : (
 		<></>
