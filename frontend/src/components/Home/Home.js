@@ -53,6 +53,7 @@ export const Home = () => {
 			<UserDataHeader user={user} summary={userSummary} />
 			<div className="operation-body">
 				<div className="operation-form">
+					<p className="operation-form-title">Add a new operation:</p>
 					{message && <Message message={message} />}
 					<OperationForm handleAddOperation={handleAddOperation} />
 				</div>

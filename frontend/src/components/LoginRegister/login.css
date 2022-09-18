@@ -25,5 +25,9 @@
   color: var(--color-4);
   border-radius: 5px;
   border: none;
-  margin-bottom: 0.75em;
+  /* margin-bottom: 0.75em; */
+}
+
+.container-form>button:hover {
+  background-color: var(--color-1);
 }

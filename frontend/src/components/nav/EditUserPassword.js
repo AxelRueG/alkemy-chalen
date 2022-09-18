@@ -31,32 +31,30 @@ export const EditUserPassword = () => {
 	}
 
 	return (
-		<>
+		<div class="container">
+			<p className="operation-form-title ">Change user password:</p>
 			{message && <Message message={message} />}
-			<form>
+			<form className="container-form">
 				<input
 					type="password"
 					onChange={handleCurrentPass}
 					value={oldpassword}
 					placeholder="current password"
 				/>
-				<br />
 				<input
 					type="password"
 					onChange={handlepassword1}
 					value={password1}
 					placeholder="new password"
 				/>
-				<br />
 				<input
 					type="password"
 					onChange={handlepassword2}
 					value={password2}
 					placeholder="confirm new password"
 				/>
-				<br />
 				<button onClick={handleSubmit}>change password</button>
 			</form>
-		</>
+		</div>
 	)
 }
