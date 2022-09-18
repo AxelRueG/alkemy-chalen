@@ -5,11 +5,14 @@ import { OperationForm } from '../OperationForm'
 import { Operation } from './Operation'
 import { UserDataHeader } from './UserDataHeader'
 import './Home.css'
+import '../LoginRegister/login.css'
+import { Message } from '../Message'
 
 export const Home = () => {
 	const { user } = useContext(UserContext)
 	const [operations, setOperations] = useState([])
 	const [userSummary, setUserSummary] = useState(0)
+	const [message, setMessage] = useState('')
 
 	useEffect(() => {
 		service
@@ -24,9 +27,17 @@ export const Home = () => {
 	}, [])
 
 	const handleAddOperation = async (operation) => {
-		const newOperation = await service.sendOperation(operation)
-		setOperations([...operations, newOperation])
-		setUserSummary(userSummary + newOperation.amount)
+		try {
+			const newOperation = await service.sendOperation(operation)
+			setOperations([...operations, newOperation])
+			setUserSummary(userSummary + newOperation.amount)
+		} catch (error) {
+			console.error(error.message)
+			setMessage('operation could not be added')
+			setTimeout(() => {
+				setMessage('')
+			}, 5000)
+		}
 	}
 
 	const handleDeleteOperation = (id) => {
@@ -40,8 +51,11 @@ export const Home = () => {
 	return (
 		<>
 			<UserDataHeader user={user} summary={userSummary} />
-			<div>
-				<OperationForm handleAddOperation={handleAddOperation} />
+			<div className="operation-body">
+				<div className="operation-form">
+					{message && <Message message={message} />}
+					<OperationForm handleAddOperation={handleAddOperation} />
+				</div>
 				<div>
 					{operations.map((operation) => (
 						<Operation

@@ -1,5 +1,6 @@
 .user,
-.user-data {
+.user-data,
+.operation-data {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,7 +26,7 @@
 }
 
 .user-data-email {
-  color: #6662;
+  color: rgb(61, 61, 61);
 }
 
 .user-img {
@@ -34,4 +35,98 @@
   background-color: white;
   margin-bottom: -5em;
   z-index: 1;
+}
+
+.operation-form {
+  width: 22em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1em;
+}
+
+.operation-form-select {
+  font-size: 1em;
+  padding: 0.3em;
+  width: 100%;
+  height: 2em;
+  margin-bottom: 1em;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+.operation-form-select:focus {
+  outline-color: var(--color-2);
+}
+
+.operation-form-select>option:hover {
+  background-color: var(--color-2);
+}
+
+/* --- Operation  -----------------------------------------------------------*/
+.operation-container {
+  background-color: var(--color-4);
+  margin-bottom: 1em;
+  border-radius: 10px;
+  padding: 1.5em;
+  width: 22em;
+}
+
+.operation-container img {
+  width: 5em;
+  background-color: white;
+}
+
+.operation-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.operation-header-info {
+  margin-left: 2em;
+  width: calc(100% - 5em);
+}
+
+.operation-header-description {
+  color: #555;
+  font-size: 0.8em;
+  margin-bottom: 0.3em;
+}
+
+.operation-header-amount {
+  color: rgb(0, 0, 0)
+}
+
+.amount-negative {
+  color: #b40000;
+}
+
+.operation-header-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.operation-header-buttons>button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+  font-size: 1.2em;
+  margin-left: 0.2em;
+  border: none;
+  border-radius: 5px;
+  /* background-color: var(--color-4); */
+}
+
+.operation-buttons-edit:hover {
+  background-color: var(--color-2);
+}
+
+.operation-buttons-delete:hover {
+  background-color: red;
 }

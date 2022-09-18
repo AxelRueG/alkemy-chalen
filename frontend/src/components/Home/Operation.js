@@ -5,11 +5,14 @@ export const Operation = ({ operation, handleDeleteOperation }) => {
 	const navigate = useNavigate()
 
 	const handleDelete = async () => {
-		try {
-			await service.deleteOperation(operation.id)
-			handleDeleteOperation(operation.id)
-		} catch {
-			alert('something')
+		const confirmStatus = window.confirm(`Are you sure you want to delete: ${operation.title}`)
+		if (confirmStatus) {
+			try {
+				await service.deleteOperation(operation.id)
+				handleDeleteOperation(operation.id)
+			} catch {
+				alert('something')
+			}
 		}
 	}
 
@@ -21,19 +24,29 @@ export const Operation = ({ operation, handleDeleteOperation }) => {
 	}
 
 	return (
-		<div>
-			<div>
+		<div className="operation-container">
+			<div className="operation-header">
 				<img src={operation.img} alt="category" />
-				<div>
+				<div className="operation-header-info">
 					<h3>{operation.title}</h3>
-					<p>{humanizate(operation.pub_date)}</p>
+					<p className="operation-header-description">{humanizate(operation.pub_date)}</p>
+					<p className="operation-header-description">{operation.description}</p>
+					<p className="operation-header-amount">
+						$
+						<span className={operation.amount < 0 ? 'amount-negative' : ''}>
+							{operation.amount}
+						</span>
+					</p>
+					<div className="operation-header-buttons">
+						<button onClick={handleEdit} className="operation-buttons-edit">
+							<i className="fa fa-pen"></i>
+						</button>
+						<button onClick={handleDelete} className="operation-buttons-delete">
+							<i className="fa fa-trash"></i>
+						</button>
+					</div>
 				</div>
 			</div>
-			<p>
-				<span>{operation.description}</span> $<span>{operation.amount}</span>
-			</p>
-			<button onClick={handleEdit}>edit</button>
-			<button onClick={handleDelete}>delete</button>
 		</div>
 	)
 }

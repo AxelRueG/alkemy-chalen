@@ -54,28 +54,23 @@ export const OperationForm = ({ handleAddOperation, operation = {} }) => {
 	}
 
 	return (
-		<form>
+		<form className="container-form operation-form-fields">
 			<input type="text" onChange={handleTitle} value={title} placeholder="title" />
-			<br />
 			<input
 				type="text"
 				onChange={handleDescription}
 				value={description}
 				placeholder="description"
 			/>
-			<br />
 			<input type="numeric" onChange={handleAmount} value={amount} placeholder="amount" />
-			<br />
 			<input type="date" onChange={handleDate} value={pub_date} />
-			<br />
-			<select value={category} onChange={handleSelect}>
+			<select value={category} onChange={handleSelect} className="operation-form-select">
 				{categories.map((elem) => (
 					<option key={elem.id} value={elem.id}>
 						{elem.name}
 					</option>
 				))}
 			</select>
-			<br />
 			<button onClick={handleSubmit}>ADD</button>
 		</form>
 	)
