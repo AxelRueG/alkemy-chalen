@@ -4,6 +4,7 @@ import service from '../../services/services'
 import { OperationForm } from '../OperationForm'
 import { Operation } from './Operation'
 import { UserDataHeader } from './UserDataHeader'
+import './Home.css'
 
 export const Home = () => {
 	const { user } = useContext(UserContext)
@@ -38,7 +39,6 @@ export const Home = () => {
 
 	return (
 		<>
-			<h1>Home</h1>
 			<UserDataHeader user={user} summary={userSummary} />
 			<div>
 				<OperationForm handleAddOperation={handleAddOperation} />
