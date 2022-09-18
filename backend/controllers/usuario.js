@@ -22,10 +22,11 @@ router.post('/', dataValid, async (req, res) => {
 
 	// hash password
 	const password_hash = await bcrypt.hash(password, 10)
+	const uname = username.toLowerCase()
 
 	// save the new user if don't exist
 	await DB.query('INSERT INTO profile (username,userpassword,email,id_img) VALUES ($1,$2,$3,$4)', [
-		username,
+		uname,
 		password_hash,
 		email,
 		1,

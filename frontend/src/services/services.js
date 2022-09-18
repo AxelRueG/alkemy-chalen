@@ -2,6 +2,7 @@ import axios from 'axios'
 
 class Services {
 	URL = 'http://localhost:3000'
+	// URL = '' // this is for build
 	token = undefined
 
 	// --- config and setting services ------------------------------------
