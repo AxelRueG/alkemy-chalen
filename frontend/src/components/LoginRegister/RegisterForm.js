@@ -41,9 +41,9 @@ export const RegisterForm = () => {
 	}
 
 	return (
-		<>
+		<div className="container">
 			{errorMessage && <p>{errorMessage}</p>}
-			<form>
+			<form className="container-form">
 				<input type="text" value={username} onChange={handleUsername} placeholder="usename" />
 				<input type="email" value={email} onChange={handleEmail} placeholder="email" />
 				<input type="password" value={password} onChange={handlePassword} placeholder="password" />
@@ -55,7 +55,9 @@ export const RegisterForm = () => {
 				/>
 				<button onClick={handleSubmit}>sign in</button>
 			</form>
-			you have an account? <Link to="/login">log in</Link>
-		</>
+			<p>
+				you have an account? <Link to="/login">log in</Link>
+			</p>
+		</div>
 	)
 }

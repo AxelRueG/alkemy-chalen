@@ -1,3 +1,85 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-1: rgb(27, 107, 90);
+  --color-2: rgb(38, 150, 126);
+  --color-3: rgb(211, 209, 209);
+  --color-4: #fefefe;
+}
+
+body {
+  background-color: var(--color-3);
+  font-size: 16px;
+  /* font-family: 'Oswald', sans-serif; */
+}
+
+.header {
+  /* height: 5em; */
+  padding: 1em;
+  background-color: var(--color-1);
+  color: var(--color-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  font-size: medium;
+  list-style: none;
+}
+
+.header-menu a {
+  text-decoration: none;
+  color: var(--color-4);
+  display: block;
+  padding: 0.5em;
+  height: 100%;
+}
+
+.header-menu a:hover {
+  background-color: var(--color-2);
+}
+
+.body {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+
+/* --- GENERIC STYLE -------------------------------------------------------------------- */
+.container {
+  background-color: var(--color-4);
+  padding: 1.5em;
+  border-radius: 10px;
+  width: 22em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0px 5px 22px -4px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 5px 22px -4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 5px 22px -4px rgba(0, 0, 0, 0.5);
+}
+
+.container input {
+  display: block;
+}
+
 img {
   width: 100px;
 }

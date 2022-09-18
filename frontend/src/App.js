@@ -31,11 +31,11 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<header>
+			<header className="header">
 				<h1>Personal Pudget</h1>
 				<nav>
 					{user ? (
-						<ul>
+						<ul className="header-menu">
 							<li>
 								<NavLink to="/">Home</NavLink>
 							</li>
@@ -55,7 +55,7 @@ const App = () => {
 							</li>
 						</ul>
 					) : (
-						<ul>
+						<ul className="header-menu">
 							<li>
 								<NavLink to="/login">Log in</NavLink>
 							</li>
@@ -66,56 +66,58 @@ const App = () => {
 					)}
 				</nav>
 			</header>
-			<Routes>
-				<Route
-					path="/register"
-					element={
-						<PublicRoutes>
-							<RegisterForm />
-						</PublicRoutes>
-					}
-				/>
-				<Route
-					path="/login"
-					element={
-						<PublicRoutes>
-							<LoginForm />
-						</PublicRoutes>
-					}
-				/>
-				<Route
-					path="/"
-					element={
-						<PrivateRoutes>
-							<Home />
-						</PrivateRoutes>
-					}
-				/>
-				<Route
-					path="/user/profile"
-					element={
-						<PrivateRoutes>
-							<EditUserProfileImg />
-						</PrivateRoutes>
-					}
-				/>
-				<Route
-					path="/user/password"
-					element={
-						<PrivateRoutes>
-							<EditUserPassword />
-						</PrivateRoutes>
-					}
-				/>
-				<Route
-					path="/operation/:id"
-					element={
-						<PrivateRoutes>
-							<EditOperationForm />
-						</PrivateRoutes>
-					}
-				/>
-			</Routes>
+			<main className="body">
+				<Routes>
+					<Route
+						path="/register"
+						element={
+							<PublicRoutes>
+								<RegisterForm />
+							</PublicRoutes>
+						}
+					/>
+					<Route
+						path="/login"
+						element={
+							<PublicRoutes>
+								<LoginForm />
+							</PublicRoutes>
+						}
+					/>
+					<Route
+						path="/"
+						element={
+							<PrivateRoutes>
+								<Home />
+							</PrivateRoutes>
+						}
+					/>
+					<Route
+						path="/user/profile"
+						element={
+							<PrivateRoutes>
+								<EditUserProfileImg />
+							</PrivateRoutes>
+						}
+					/>
+					<Route
+						path="/user/password"
+						element={
+							<PrivateRoutes>
+								<EditUserPassword />
+							</PrivateRoutes>
+						}
+					/>
+					<Route
+						path="/operation/:id"
+						element={
+							<PrivateRoutes>
+								<EditOperationForm />
+							</PrivateRoutes>
+						}
+					/>
+				</Routes>
+			</main>
 		</div>
 	)
 }
