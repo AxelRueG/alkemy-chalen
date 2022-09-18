@@ -29,15 +29,20 @@ body {
   align-items: center;
 }
 
+/* --- MENU ------------------------------------------------------------------------------------- */
 .header-menu {
   height: 100%;
   display: flex;
   flex-direction: row;
   font-size: medium;
+  position: relative;
   list-style: none;
 }
 
+.drop-menu-button,
+.menu-logout-button,
 .header-menu a {
+  cursor: pointer;
   text-decoration: none;
   color: var(--color-4);
   display: block;
@@ -45,10 +50,38 @@ body {
   height: 100%;
 }
 
+.menu-logout-button:hover,
+.drop-menu-button:hover,
 .header-menu a:hover {
   background-color: var(--color-2);
 }
 
+.menu-logout-button {
+  background-color: transparent;
+  border: 0;
+  /* font-weight: 600; */
+  font-size: 1em;
+}
+
+/* --- drop down menu --------------------------------------------------------------------------- */
+/* .container-drop-menu {
+  position: relative;
+} */
+
+.hidden-menu {
+  display: none;
+}
+
+.dropdown-menu {
+  list-style: none;
+  position: absolute;
+  background-color: #777;
+  z-index: 2;
+  left: 0;
+  width: 100%;
+}
+
+/* --- GENERIC STYLE ---------------------------------------------------------------------------- */
 .body {
   /* width: 100vw; */
   display: flex;
@@ -59,13 +92,12 @@ body {
   padding-bottom: 1.5em;
 }
 
-/* --- GENERIC STYLE -------------------------------------------------------------------- */
 .container {
   background-color: var(--color-4);
   padding: 1.5em;
   border-radius: 10px;
   width: 95%;
-  max-width: 450px;
+  max-width: 550px;
 
   display: flex;
   flex-direction: column;
@@ -77,6 +109,33 @@ body {
   -moz-box-shadow: 0px 5px 22px -4px rgba(0, 0, 0, 0.5);
 }
 
-.container input {
-  display: block;
+.danger,
+.success {
+  width: 100%;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+  padding-left: 0.5em;
+}
+
+.success {
+  color: var(--color-2);
+}
+
+.danger {
+  color: rgb(194, 0, 0);
+}
+
+@media screen and (min-width: 900px) {
+  .body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1.5em;
+  }
+
+  .operation-form {
+    margin-right: 4em;
+    position: sticky;
+    top: 2em;
+  }
 }

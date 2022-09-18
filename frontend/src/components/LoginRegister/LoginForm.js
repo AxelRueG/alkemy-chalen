@@ -3,6 +3,7 @@ import service from '../../services/services'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../contexts/UserContext'
 import './login.css'
+import { Message } from '../Message'
 
 export const LoginForm = () => {
 	const { setUser } = useContext(UserContext)
@@ -32,13 +33,16 @@ export const LoginForm = () => {
 
 	return (
 		<div className="container">
-			{message && <p>{message}</p>}
+			<p className="operation-form-title">Login</p>
+			{message && <Message message={message} />}
 			<form className="container-form">
 				<input type="text" value={username} placeholder="username" onChange={handleUsername} />
 				<input type="password" value={password} placeholder="password" onChange={handlepassword} />
 				<button onClick={handleClick}>log in</button>
 			</form>
-			<Link to="/register">sign in</Link>
+			<Link className="link-register-login" to="/register">
+				sign in
+			</Link>
 		</div>
 	)
 }

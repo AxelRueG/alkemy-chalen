@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import service from './services/services'
 import { Routes, Route, NavLink } from 'react-router-dom'
 import { UserContext } from './contexts/UserContext'
@@ -14,6 +14,7 @@ import { EditUserPassword } from './components/nav/EditUserPassword'
 
 const App = () => {
 	const { user, setUser } = useContext(UserContext)
+	const [display, setDisplay] = useState(true)
 
 	useEffect(() => {
 		const userData = window.localStorage.getItem('userData')
@@ -29,6 +30,8 @@ const App = () => {
 		setUser(undefined)
 	}
 
+	const handleHidden = () => setDisplay(!display)
+
 	return (
 		<div className="App">
 			<header className="header">
@@ -39,9 +42,11 @@ const App = () => {
 							<li>
 								<NavLink to="/">Home</NavLink>
 							</li>
-							<li>
-								config
-								<ul>
+							<li className="container-drop-menu">
+								<span onClick={handleHidden} className="drop-menu-button">
+									Config
+								</span>
+								<ul className={`dropdown-menu ${display ? 'hidden-menu' : ''}`}>
 									<li>
 										<NavLink to="/user/profile">change profile image</NavLink>
 									</li>
@@ -50,8 +55,8 @@ const App = () => {
 									</li>
 								</ul>
 							</li>
-							<li>
-								<button onClick={handleLogout}> logout </button>
+							<li className="menu-logout-button" onClick={handleLogout}>
+								Logout
 							</li>
 						</ul>
 					) : (

@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../contexts/UserContext'
+import { Message } from '../Message'
 import service from '../../services/services'
 
 export const RegisterForm = () => {
@@ -11,7 +12,7 @@ export const RegisterForm = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [passwordConfirm, setPasswordConfirm] = useState('')
-	const [errorMessage, setErrorMessage] = useState(null)
+	const [message, setMessage] = useState(null)
 
 	const handleUsername = (event) => setUsername(event.target.value)
 	const handleEmail = (event) => setEmail(event.target.value)
@@ -22,14 +23,14 @@ export const RegisterForm = () => {
 		event.preventDefault()
 
 		if (password !== passwordConfirm) {
-			setErrorMessage('password dont match')
+			setMessage('password dont match')
 			return
 		}
 
 		const responseStatus = await service.register({ username, password, email })
 
 		if (responseStatus !== 201) {
-			setErrorMessage('invalid fiels')
+			setMessage('invalid fiels')
 			return
 		}
 
@@ -42,7 +43,8 @@ export const RegisterForm = () => {
 
 	return (
 		<div className="container">
-			{errorMessage && <p>{errorMessage}</p>}
+			<p className="operation-form-title">Register</p>
+			{message && <Message message={message} />}
 			<form className="container-form">
 				<input type="text" value={username} onChange={handleUsername} placeholder="usename" />
 				<input type="email" value={email} onChange={handleEmail} placeholder="email" />
@@ -55,7 +57,7 @@ export const RegisterForm = () => {
 				/>
 				<button onClick={handleSubmit}>sign in</button>
 			</form>
-			<p>
+			<p className="link-register-login">
 				you have an account? <Link to="/login">log in</Link>
 			</p>
 		</div>

@@ -31,6 +31,10 @@ export const Home = () => {
 			const newOperation = await service.sendOperation(operation)
 			setOperations([...operations, newOperation])
 			setUserSummary(userSummary + newOperation.amount)
+			setMessage('operation added successfully')
+			setTimeout(() => {
+				setMessage('')
+			}, 5000)
 		} catch (error) {
 			console.error(error.message)
 			setMessage('operation could not be added')

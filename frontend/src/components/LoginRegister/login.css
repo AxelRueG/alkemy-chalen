@@ -31,3 +31,7 @@
 .container-form>button:hover {
   background-color: var(--color-1);
 }
+
+.link-register-login {
+  margin-top: 0.5em;
+}
