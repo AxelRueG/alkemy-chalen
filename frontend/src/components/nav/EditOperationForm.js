@@ -31,11 +31,13 @@ export const EditOperationForm = () => {
 	}
 
 	return operation ? (
-		<>
+		<div className="container">
+			<p className="operation-form-title">
+				Edit the operation <em>"{operation.title}</em>":
+			</p>
 			{message !== '' && <Message message={message} />}
-			<h2>Edit the operation {operation.title}</h2>
 			<OperationForm handleAddOperation={handleAddOperation} operation={operation} />
-		</>
+		</div>
 	) : (
 		<></>
 	)

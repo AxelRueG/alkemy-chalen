@@ -73,12 +73,17 @@
 }
 
 /* --- Operation  -----------------------------------------------------------*/
+.operation-body {
+  width: 92%;
+  max-width: 450px;
+}
+
 .operation-container {
   background-color: var(--color-4);
   margin-bottom: 1em;
   border-radius: 10px;
   padding: 1.5em;
-  width: 22em;
+  width: 100%;
 }
 
 .operation-container img {

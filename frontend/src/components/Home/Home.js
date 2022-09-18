@@ -50,13 +50,13 @@ export const Home = () => {
 
 	return (
 		<>
-			<UserDataHeader user={user} summary={userSummary} />
+			<div className="operation-form">
+				<UserDataHeader user={user} summary={userSummary} />
+				<p className="operation-form-title">Add a new operation:</p>
+				{message && <Message message={message} />}
+				<OperationForm handleAddOperation={handleAddOperation} />
+			</div>
 			<div className="operation-body">
-				<div className="operation-form">
-					<p className="operation-form-title">Add a new operation:</p>
-					{message && <Message message={message} />}
-					<OperationForm handleAddOperation={handleAddOperation} />
-				</div>
 				<div>
 					{operations.map((operation) => (
 						<Operation

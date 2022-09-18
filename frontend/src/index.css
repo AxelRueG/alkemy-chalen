@@ -64,7 +64,8 @@ body {
   background-color: var(--color-4);
   padding: 1.5em;
   border-radius: 10px;
-  width: 22em;
+  width: 95%;
+  max-width: 450px;
 
   display: flex;
   flex-direction: column;

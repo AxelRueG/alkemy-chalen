@@ -31,7 +31,7 @@ export const EditUserPassword = () => {
 	}
 
 	return (
-		<div class="container">
+		<div className="container">
 			<p className="operation-form-title ">Change user password:</p>
 			{message && <Message message={message} />}
 			<form className="container-form">

@@ -2,17 +2,13 @@ import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import service from '../../services/services'
 import { Message } from '../Message'
-
-const styleImg = {
-	padding: '1em',
-}
+import './navStyle.css'
 
 const ProfileImage = ({ img, imgID, handleSelect }) => {
-	// const cssClassImgSelected = imgID===img.id? 'img-selected':''
-	const cssClassImgSelected = imgID === img.id ? { ...styleImg, backgroundColor: 'blue' } : styleImg
+	const cssClassImgSelected = imgID === img.id ? 'img-selected' : ''
 
 	return (
-		<div style={cssClassImgSelected}>
+		<div className={`profile-image ${cssClassImgSelected}`}>
 			<img src={img.img_url} alt="image_profile" onClick={() => handleSelect(img.id)} />
 		</div>
 	)
@@ -58,14 +54,17 @@ export const EditUserProfileImg = () => {
 	}
 
 	return (
-		<>
-			<div>
+		<div className="container image-container">
+			<p className="operation-form-title">Select your new ProfileImage:</p>
+			<div className="image-container-images">
 				{message !== '' && <Message message={message} />}
 				{imgs.map((img) => (
 					<ProfileImage key={img.id} img={img} imgID={imgID} handleSelect={handleSelect} />
 				))}
-				<button onClick={handleSubmit}>change</button>
 			</div>
-		</>
+			<button className="image-container-button" onClick={handleSubmit}>
+				change
+			</button>
+		</div>
 	)
 }

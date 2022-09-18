@@ -1,0 +1,45 @@
+.image-container {
+  width: 90% !important;
+  max-width: 800px;
+}
+
+.image-container-images {
+  border: 2px solid var(--color-2);
+  border-radius: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.profile-image {
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  margin: 1em;
+}
+
+.profile-image>img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.img-selected {
+  border: 5px solid green;
+}
+
+.image-container-button {
+  font-size: 1em;
+  padding: 0.5em;
+  width: 10em;
+  margin-top: 1em;
+  border: 0;
+  border-radius: 5px;
+  background-color: var(--color-2);
+  color: white;
+}
+
+.image-container-button:hover {
+  background-color: var(--color-1);
+}
