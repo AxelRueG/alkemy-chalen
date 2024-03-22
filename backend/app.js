@@ -2,7 +2,8 @@ const express = require('express')
 const { logger } = require('./utils/logger')
 const { errorHandler, unknowEndPoint } = require('./utils/middlewares')
 const cors = require('cors')
-require('dotenv').config()
+
+if (process.env.NODE_ENV !== "production") require('dotenv').config()
 require('express-async-errors')
 
 const routerLogin = require('./controllers/login')
